@@ -1,13 +1,15 @@
-package com.toprak.main;
+package Operations;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 
 /**
- * Created by toprak on 3/1/2017.
+ * Created by toprak on 3/13/2017.
  */
+
 public class RotationMatrix {
+    Color blackColor = new Color(0,0,0);
     final BufferedImage image;
     BufferedImage rotatedImage;
     final String rotateFrom;
@@ -21,24 +23,28 @@ public class RotationMatrix {
     }
 
     public void rotatePicture(int degree) {
-        calculateDimensions();
         rotate(degree);
     }
 
     private void rotate(int degree) {
-
-        rotatedImage = reshapePicture(image, (int) width, (int) heigth);
+        rotatedImage = reshapePicture(image, image.getWidth(), image.getHeight());
         for (int i = 0; i < image.getWidth(); i++) {
             for (int j = 0; j < image.getHeight(); j++) {
-                rotatedImage.setRGB(i, j, 0);
+                rotatedImage.setRGB(i, j, blackColor.getRGB());
             }
         }
 
         for (int i = 0; i < image.getWidth(); i++) {
             for (int j = 0; j < image.getHeight(); j++) {
-                rotatedImage.setRGB((int) (oldX(i, j, degree)), (int) (oldY(i, j, degree) + Math.sin(Math.toRadians(degree)) * image.getWidth()), image.getRGB(i, j));
+                if(isOutOfBound(degree, i, j))
+                    continue;
+                rotatedImage.setRGB((int) (calculateNewXValue(i, j, degree)), (int) (calculateNewYValue(i, j, degree) + Math.sin(Math.toRadians(degree)) * image.getWidth()), image.getRGB(i, j));
             }
         }
+    }
+
+    private boolean isOutOfBound(int degree, int i, int j) {
+        return calculateNewXValue(i, j, degree) > rotatedImage.getWidth() ||  (calculateNewYValue(i, j, degree) + Math.sin(Math.toRadians(degree)) * image.getWidth()) > rotatedImage.getHeight();
     }
 
     public static BufferedImage reshapePicture(BufferedImage img, int newW, int newH) {
@@ -47,19 +53,6 @@ public class RotationMatrix {
         g2d.drawImage(null, 0, 0, null);
         g2d.dispose();
         return dimg;
-    }
-
-    private void calculateDimensions() {
-        if ("center".equalsIgnoreCase(rotateFrom)) {
-            int edge = (image.getHeight() > image.getWidth()) ? image.getHeight() : image.getWidth();
-            double hypotenuse = calculateHypotenuse(edge, edge);
-            width = hypotenuse;
-            heigth = hypotenuse;
-        } else {
-            double hypotenuse = calculateHypotenuse(image.getHeight(), image.getWidth());
-            width = hypotenuse;
-            heigth = hypotenuse;
-        }
     }
 
     public double calculateHypotenuse(int edge1, int edge2) {
@@ -80,12 +73,14 @@ public class RotationMatrix {
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     }
 
-    public static double oldX(int x, int y, double degree) {
-        return Math.cos(Math.toRadians(-degree)) * x - Math.sin(Math.toRadians(-degree)) * y;
+    public static double calculateNewXValue(int x, int y, double degree) {
+        double value = Math.cos(Math.toRadians(-degree)) * x - Math.sin(Math.toRadians(-degree)) * y;
+        return value;
     }
 
-    public static double oldY(int x, int y, double degree) {
-        return Math.sin(Math.toRadians(-degree)) * x + Math.cos(Math.toRadians(-degree)) * y;
+    public static double calculateNewYValue(int x, int y, double degree) {
+        double value = Math.sin(Math.toRadians(-degree)) * x + Math.cos(Math.toRadians(-degree)) * y;
+        return value;
     }
 
 

@@ -1,6 +1,4 @@
-package com.toprak.test;
-
-import com.toprak.main.RotationMatrix;
+import Operations.RotationMatrix;
 import org.junit.Test;
 
 import javax.imageio.ImageIO;
@@ -10,12 +8,12 @@ import java.io.IOException;
 
 import static junit.framework.TestCase.assertEquals;
 
-
 /**
- * Created by toprak on 3/1/2017.
+ * Created by toprak on 3/13/2017.
  */
 public class RotationMatrixTest {
-    String imagePath = "C:\\Users\\toprak\\Projects\\RotationMatrix\\src\\com\\toprak\\main\\resources\\leffe.jpg";
+
+    String imagePath = "C:\\Users\\toprak\\Projects\\ComputerVision\\src\\main\\resources\\leffe.jpg";
 
     @Test
     public void test_calculate_hypotenuse(){
@@ -29,13 +27,4 @@ public class RotationMatrixTest {
         BufferedImage img = ImageIO.read(new File(imagePath));
         RotationMatrix app = new RotationMatrix(img, "center");
     }
-
-//    @Test
-//    public void test_display_image() throws IOException, InterruptedException {
-//        BufferedImage img = ImageIO.read(new File(imagePath));
-//        RotationMatrix app = new RotationMatrix(img, "center");
-//        app.rotatePicture(20);
-//        app.displayImage();
-//        Thread.sleep(9999);
-//    }
 }
