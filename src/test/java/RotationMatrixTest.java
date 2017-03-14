@@ -12,8 +12,7 @@ import static junit.framework.TestCase.assertEquals;
  * Created by toprak on 3/13/2017.
  */
 public class RotationMatrixTest {
-
-    String imagePath = "C:\\Users\\toprak\\Projects\\ComputerVision\\src\\main\\resources\\leffe.jpg";
+    File file = new File(Main.class.getClassLoader().getResource("leffe.jpg").getFile());
 
     @Test
     public void test_calculate_hypotenuse(){
@@ -24,7 +23,7 @@ public class RotationMatrixTest {
 
     @Test
     public void test_rotate_picture() throws IOException {
-        BufferedImage img = ImageIO.read(new File(imagePath));
+        BufferedImage img = ImageIO.read(file);
         RotationMatrix app = new RotationMatrix(img, "center");
     }
 }

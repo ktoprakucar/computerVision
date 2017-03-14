@@ -10,9 +10,10 @@ import java.io.IOException;
  */
 
 public class Main {
+
     public static void main(String[] args) throws IOException {
-        String imagePath = "C:\\Users\\toprak\\Projects\\ComputerVision\\src\\main\\resources\\leffe.jpg";
-        BufferedImage img = ImageIO.read(new File(imagePath));
+        File file = new File(Main.class.getClassLoader().getResource("leffe.jpg").getFile());
+        BufferedImage img = ImageIO.read(file);
         RotationMatrix app = new RotationMatrix(img, "corner");
         app.rotatePicture(10);
         app.displayImage();
