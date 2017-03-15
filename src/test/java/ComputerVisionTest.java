@@ -1,4 +1,5 @@
 import Operations.RotationMatrix;
+import org.junit.Ignore;
 import org.junit.Test;
 
 import javax.imageio.ImageIO;
@@ -11,8 +12,8 @@ import static junit.framework.TestCase.assertEquals;
 /**
  * Created by toprak on 3/13/2017.
  */
-public class RotationMatrixTest {
-    File file = new File(Main.class.getClassLoader().getResource("leffe.jpg").getFile());
+public class ComputerVisionTest {
+    File file = new File(ComputerVisionTest.class.getClassLoader().getResource("leffe.jpg").getFile());
 
     @Test
     public void test_calculate_hypotenuse(){
@@ -25,5 +26,16 @@ public class RotationMatrixTest {
     public void test_rotate_picture() throws IOException {
         BufferedImage img = ImageIO.read(file);
         RotationMatrix app = new RotationMatrix(img, "center");
+    }
+
+    @Ignore
+    @Test
+    public void test() throws IOException, InterruptedException {
+        File file = new File(ComputerVisionTest.class.getClassLoader().getResource("leffe.jpg").getFile());
+        BufferedImage img = ImageIO.read(file);
+        RotationMatrix app = new RotationMatrix(img, "corner");
+        app.rotatePicture(15);
+        app.displayImage();
+        Thread.sleep(100000);
     }
 }
