@@ -89,11 +89,6 @@ public class RotationMatrix {
     return dimg;
   }
 
-  public double calculateHypotenuse(int edge1, int edge2) {
-    double hypotenuse = Math.sqrt((Math.pow(edge1, 2) + Math.pow(edge2, 2)));
-    return hypotenuse;
-  }
-
   public void displayImage() {
     ImageIcon icon = new ImageIcon(rotatedImage);
     frame.setLayout(new BorderLayout());

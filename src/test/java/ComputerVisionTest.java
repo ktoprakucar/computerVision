@@ -1,3 +1,4 @@
+import Operations.Calculations;
 import Operations.RotationMatrix;
 import org.junit.Ignore;
 import org.junit.Test;
@@ -17,16 +18,10 @@ public class ComputerVisionTest {
 
     @Test
     public void test_calculate_hypotenuse(){
-        RotationMatrix rotationMatrix = new RotationMatrix(null, null);
-        double hypotenuse = rotationMatrix.calculateHypotenuse(3, 4);
+        double hypotenuse = Calculations.calculateHypotenuse(3, 4);
         assertEquals(hypotenuse, 5.0);
     }
 
-    @Test
-    public void test_rotate_picture() throws IOException {
-        BufferedImage img = ImageIO.read(file);
-        RotationMatrix app = new RotationMatrix(img, "center");
-    }
 
     @Ignore
     @Test

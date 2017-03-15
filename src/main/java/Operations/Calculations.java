@@ -23,4 +23,10 @@ public class Calculations {
     return space;
   }
 
+
+  public static double calculateHypotenuse(int edge1, int edge2) {
+    double hypotenuse = Math.sqrt((Math.pow(edge1, 2) + Math.pow(edge2, 2)));
+    return hypotenuse;
+  }
+
 }
