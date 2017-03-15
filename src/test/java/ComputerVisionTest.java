@@ -30,11 +30,22 @@ public class ComputerVisionTest {
 
     @Ignore
     @Test
-    public void test() throws IOException, InterruptedException {
+    public void test_rotate_from_center() throws IOException, InterruptedException {
+        File file = new File(ComputerVisionTest.class.getClassLoader().getResource("leffe.jpg").getFile());
+        BufferedImage img = ImageIO.read(file);
+        RotationMatrix app = new RotationMatrix(img, "center");
+        app.rotate(45);
+        app.displayImage();
+        Thread.sleep(100000);
+    }
+
+    @Ignore
+    @Test
+    public void test_rotate_from_corner() throws IOException, InterruptedException {
         File file = new File(ComputerVisionTest.class.getClassLoader().getResource("leffe.jpg").getFile());
         BufferedImage img = ImageIO.read(file);
         RotationMatrix app = new RotationMatrix(img, "corner");
-        app.rotatePicture(15);
+        app.rotate(45);
         app.displayImage();
         Thread.sleep(100000);
     }

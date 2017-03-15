@@ -14,32 +14,41 @@ public class RotationMatrix {
   BufferedImage rotatedImage;
   final String rotateFrom;
   JFrame frame = new JFrame();
-  double width;
-  double heigth;
 
   public RotationMatrix(BufferedImage image, String rotateFrom) {
     this.image = image;
     this.rotateFrom = rotateFrom;
   }
 
-  public void rotatePicture(int degree) {
-    rotate(degree);
-  }
-
-  private void rotate(int degree) {
+  public void rotate(int degree) {
     rotatedImage = reshapePicture(image, image.getWidth(), image.getHeight());
     paintEmptyImage();
-    rotateFromCorner(degree);
+    if ("center".equalsIgnoreCase(rotateFrom))
+      rotateFromCenter(degree);
+    else if ("corner".equalsIgnoreCase(rotateFrom))
+      rotateFromCorner(degree);
+  }
+
+  private void rotateFromCenter(int degree) {
+    for (int i = 0; i < image.getWidth(); i++) {
+      for (int j = 0; j < image.getHeight(); j++) {
+        int originedX = i - (image.getWidth() / 2);
+        int originedY = j - (image.getHeight() / 2);
+        if (isOutOfBound(degree, originedX, originedY))
+          continue;
+        rotatedImage.setRGB((int) (calculateNewXValue(originedX, originedY, degree)) + rotatedImage.getWidth() / 2, (int) (calculateNewYValue(originedX, originedY, degree)) + rotatedImage.getHeight() / 2, image.getRGB(i, j));
+      }
+    }
   }
 
   private void rotateFromCorner(int degree) {
     for (int i = 0; i < image.getWidth(); i++) {
-            for (int j = 0; j < image.getHeight(); j++) {
-                if(isOutOfBound(degree, i, j))
-                    continue;
-                rotatedImage.setRGB((int) (calculateNewXValue(i, j, degree)), (int) (calculateNewYValue(i, j, degree)), image.getRGB(i, j));
-            }
-        }
+      for (int j = 0; j < image.getHeight(); j++) {
+        if (isOutOfBound(degree, i, j))
+          continue;
+        rotatedImage.setRGB((int) (calculateNewXValue(i, j, degree)), (int) (calculateNewYValue(i, j, degree)), image.getRGB(i, j));
+      }
+    }
   }
 
   private void paintEmptyImage() {
@@ -51,14 +60,24 @@ public class RotationMatrix {
   }
 
   private boolean isOutOfBound(int degree, int i, int j) {
-        return isXOutOfBound(degree, i, j) || isYOutOfBound(degree, i, j);
-    }
+    if ("corner".equalsIgnoreCase(rotateFrom))
+      return isXOutOfBoundForCornerRotation(degree, i, j) || isYOutOfBoundForCornerRotation(degree, i, j);
+    return isXOutOfBoundForCenterRotation(degree, i, j) || isYOutOfBoundForCenterRotation(degree, i, j);
+  }
 
-  private boolean isYOutOfBound(int degree, int i, int j) {
+  private boolean isYOutOfBoundForCenterRotation(int degree, int i, int j) {
+    return calculateNewYValue(i, j, degree) + rotatedImage.getHeight() / 2 > rotatedImage.getHeight() || calculateNewYValue(i, j, degree)+ rotatedImage.getHeight() / 2 < 0;
+  }
+
+  private boolean isXOutOfBoundForCenterRotation(int degree, int i, int j) {
+    return calculateNewXValue(i, j, degree) + rotatedImage.getWidth() / 2 > rotatedImage.getWidth() || calculateNewXValue(i, j, degree) + rotatedImage.getWidth()/2< 0;
+  }
+
+  private boolean isYOutOfBoundForCornerRotation(int degree, int i, int j) {
     return calculateNewYValue(i, j, degree) > rotatedImage.getHeight() || calculateNewYValue(i, j, degree) < 0;
   }
 
-  private boolean isXOutOfBound(int degree, int i, int j) {
+  private boolean isXOutOfBoundForCornerRotation(int degree, int i, int j) {
     return calculateNewXValue(i, j, degree) > rotatedImage.getWidth() || calculateNewXValue(i, j, degree) < 0;
   }
 
@@ -78,9 +97,7 @@ public class RotationMatrix {
   public void displayImage() {
     ImageIcon icon = new ImageIcon(rotatedImage);
     frame.setLayout(new BorderLayout());
-    frame.setSize((int) width, (int) heigth);
     JLabel label = new JLabel();
-    label.setSize((int) width, (int) heigth);
     label.setIcon(icon);
     frame.add(label);
     frame.pack();
