@@ -1,6 +1,6 @@
-package Operations;
+package operations;
 
-import Spaces.ThreeDSpace;
+import spaces.ThreeDSpace;
 
 /**
  * Created by toprak on 15-Mar-17.

@@ -1,4 +1,4 @@
-package Spaces;
+package spaces;
 
 /**
  * Created by toprak on 15-Mar-17.

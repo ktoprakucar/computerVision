@@ -1,6 +1,5 @@
-import Operations.Calculations;
-import Operations.RotationMatrix;
-import org.junit.Ignore;
+import operations.Calculations;
+import operations.RotationMatrix;
 import org.junit.Test;
 
 import javax.imageio.ImageIO;
@@ -22,8 +21,6 @@ public class ComputerVisionTest {
         assertEquals(hypotenuse, 5.0);
     }
 
-
-    @Ignore
     @Test
     public void test_rotate_from_center() throws IOException, InterruptedException {
         File file = new File(ComputerVisionTest.class.getClassLoader().getResource("leffe.jpg").getFile());
@@ -31,10 +28,9 @@ public class ComputerVisionTest {
         RotationMatrix app = new RotationMatrix(img, "center");
         app.rotate(45);
         app.displayImage();
-        Thread.sleep(100000);
+        //Thread.sleep(100000);
     }
 
-    @Ignore
     @Test
     public void test_rotate_from_corner() throws IOException, InterruptedException {
         File file = new File(ComputerVisionTest.class.getClassLoader().getResource("leffe.jpg").getFile());
@@ -42,6 +38,6 @@ public class ComputerVisionTest {
         RotationMatrix app = new RotationMatrix(img, "corner");
         app.rotate(45);
         app.displayImage();
-        Thread.sleep(100000);
+        //Thread.sleep(100000);
     }
 }
