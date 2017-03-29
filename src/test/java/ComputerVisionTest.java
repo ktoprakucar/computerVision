@@ -1,5 +1,6 @@
 import operations.Calculations;
 import operations.RotationMatrix;
+import org.junit.Ignore;
 import org.junit.Test;
 
 import javax.imageio.ImageIO;
@@ -20,6 +21,7 @@ public class ComputerVisionTest {
         double hypotenuse = Calculations.calculateHypotenuse(3, 4);
         assertEquals(hypotenuse, 5.0);
     }
+
 
     @Test
     public void test_rotate_from_center() throws IOException, InterruptedException {
