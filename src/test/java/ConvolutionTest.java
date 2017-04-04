@@ -32,4 +32,13 @@ public class ConvolutionTest {
     assertEquals(convolutionMatrix.extendedMatrix.length, img.getHeight() + filterSize - 1);
     assertEquals(convolutionMatrix.extendedMatrix[0].length, img.getHeight()+filterSize - 1);
   }
+
+  @Test
+  public void test_display_extended_image_matrix() throws InterruptedException {
+    int filterSize = 50;
+    convolutionMatrix.convolveImage(filterSize);
+    convolutionMatrix.generateImageFromMatrix(convolutionMatrix.extendedMatrix);
+    convolutionMatrix.displayImage();
+    //Thread.sleep(10000);
+    }
 }
