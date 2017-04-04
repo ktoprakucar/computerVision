@@ -1,6 +1,6 @@
 import operations.Calculations;
 import operations.RotationMatrix;
-import org.junit.Ignore;
+import org.junit.Before;
 import org.junit.Test;
 
 import javax.imageio.ImageIO;
@@ -14,8 +14,12 @@ import static junit.framework.TestCase.assertEquals;
  * Created by toprak on 3/13/2017.
  */
 public class ComputerVisionTest {
-    File file = new File(ComputerVisionTest.class.getClassLoader().getResource("leffe.jpg").getFile());
+    File leffe;
 
+    @Before
+    public void setUp(){
+      leffe = new File(ComputerVisionTest.class.getClassLoader().getResource("leffe.jpg").getFile());
+    }
     @Test
     public void test_calculate_hypotenuse(){
         double hypotenuse = Calculations.calculateHypotenuse(3, 4);
@@ -25,8 +29,8 @@ public class ComputerVisionTest {
 
     @Test
     public void test_rotate_from_center() throws IOException, InterruptedException {
-        File file = new File(ComputerVisionTest.class.getClassLoader().getResource("leffe.jpg").getFile());
-        BufferedImage img = ImageIO.read(file);
+
+        BufferedImage img = ImageIO.read(leffe);
         RotationMatrix app = new RotationMatrix(img, "center");
         app.rotate(45);
         app.displayImage();
@@ -35,8 +39,8 @@ public class ComputerVisionTest {
 
     @Test
     public void test_rotate_from_corner() throws IOException, InterruptedException {
-        File file = new File(ComputerVisionTest.class.getClassLoader().getResource("leffe.jpg").getFile());
-        BufferedImage img = ImageIO.read(file);
+
+        BufferedImage img = ImageIO.read(leffe);
         RotationMatrix app = new RotationMatrix(img, "corner");
         app.rotate(45);
         app.displayImage();
