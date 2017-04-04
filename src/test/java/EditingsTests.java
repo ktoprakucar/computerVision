@@ -2,6 +2,8 @@ import operations.Editings;
 import org.junit.Before;
 import org.junit.Test;
 
+import java.awt.*;
+
 import static junit.framework.TestCase.assertEquals;
 
 /**
@@ -39,5 +41,14 @@ public class EditingsTests {
             new int [] {1,2,3,4,5}
     };
     int[][] filledMatrix = Editings.fillOutOfMatrix(7, matrix);
+  }
+
+  @Test
+  public void test_generate_filter(){
+    Point[][] filterMatrix = Editings.generateFilterMatrix(11);
+    assertEquals(-5,filterMatrix[0][0].x);
+    assertEquals(5,filterMatrix[0][0].y);
+    assertEquals(5,filterMatrix[10][10].x);
+    assertEquals(-5,filterMatrix[10][10].y);
   }
 }
