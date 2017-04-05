@@ -20,7 +20,7 @@ public class ConvolutionTest {
 
   @Before
   public void setUp() throws IOException {
-    lennon = new File(ComputerVisionTest.class.getClassLoader().getResource("lennon.jpg").getFile());
+    lennon = new File(ComputerVisionTest.class.getClassLoader().getResource("leffe.jpg").getFile());
     img = ImageIO.read(lennon);
     convolutionMatrix = new ConvolutionMatrix(img);
   }
@@ -35,8 +35,9 @@ public class ConvolutionTest {
 
   @Test
   public void test_display_extended_image_matrix() throws InterruptedException {
-    int filterSize = 50;
+    int filterSize = 11;
     convolutionMatrix.convolveImage(filterSize);
+    convolutionMatrix.convolveWithFilter();
     convolutionMatrix.generateImageFromMatrix(convolutionMatrix.extendedMatrix);
     convolutionMatrix.displayImage();
     //Thread.sleep(10000);

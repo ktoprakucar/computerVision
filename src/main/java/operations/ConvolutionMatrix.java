@@ -48,11 +48,34 @@ public class ConvolutionMatrix {
   }
 
   public void generateImageFromMatrix(int[][] imageToBeConverted) {
-    convolvedImage = new BufferedImage(imageToBeConverted.length,imageToBeConverted.length,BufferedImage.TYPE_INT_ARGB);
-    for(int i = 0; i< imageToBeConverted.length; i++){
-      for(int j = 0; j < imageToBeConverted[0].length; j++){
-        convolvedImage.setRGB(i,j,extendedMatrix[i][j]);
+    convolvedImage = new BufferedImage(imageToBeConverted.length, imageToBeConverted.length, BufferedImage.TYPE_INT_ARGB);
+    for (int i = 0; i < imageToBeConverted.length; i++) {
+      for (int j = 0; j < imageToBeConverted[0].length; j++) {
+        convolvedImage.setRGB(i, j, extendedMatrix[i][j]);
       }
+    }
+  }
+
+  public void convolveWithFilter() {
+    int xCounter = 0;
+    int yCounter = 0;
+    int filterSize = (int) Math.ceil(filterMatrix.length / 2);
+    for (int i = 0; i < extendedMatrix.length; i++) {
+      for (int j = 0; j < extendedMatrix[0].length; j++) {
+        if (i < extendedMatrix.length - filterMatrix.length && j < extendedMatrix[0].length - filterMatrix.length) {
+          int convolvedValue = 0;
+          for (int fx = 0; fx < filterMatrix.length; fx++) {
+            for (int fy = 0; fy < filterMatrix[0].length; fy++) {
+              convolvedValue += (filterMatrix[fx][fy].x * extendedMatrix[fx + xCounter][fy + yCounter]) / Math.pow(filterMatrix.length,2);
+              convolvedValue += (filterMatrix[fx][fy].y * extendedMatrix[fx + xCounter][fy + yCounter]) / Math.pow(filterMatrix.length,2);
+            }
+          }
+          extendedMatrix[i + filterSize][j + filterSize] = convolvedValue;
+          yCounter++;
+        }
+      }
+      xCounter++;
+      yCounter = 0;
     }
   }
 }
